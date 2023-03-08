@@ -1,0 +1,16 @@
+最初に初期化する
+npm init
+
+インストールする
+npm install express
+npm install dotenv
+npm install discord-interactions
+npm install axios
+npm install discord-slash-commands
+npm install @discordjs/rest
+npm install discord-api-types
+npm install discord.js
+npm install @solana/web3.js
+
+バージョン確認する
+node -v
