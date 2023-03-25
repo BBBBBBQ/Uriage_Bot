@@ -47,18 +47,38 @@ function getData2Embed(data) {
   const picture = "https://example.com/thumbnail.png"; // サムネイル画像のURLを適切なものに変更してください。
   const market = data.source;
 
-  const embed = new Discord.MessageEmbed()
-    .setTitle(ArtName)
-    .setURL(`https://explorer.solana.com/tx/${sign}`)
-    .setDescription("")
-    .addFields(
-      { name: "\u200B", value: `Congrats ${purWal} on the purchase🎉`, inline: false },
-      { name: "Price", value: `${price} SOL`, inline: true },
-      { name: "Seller", value: `${selWal}`, inline: true },
-      { name: "Market", value: market, inline: true }
-    )
-    .setImage(picture)
-    .setFooter(`Posted on ${dateString}`);
-
+  const embed = {
+    title: ArtName,
+    url: `https://explorer.solana.com/tx/${sign}`,
+    description: "",
+    fields: [
+      {
+        name: "",
+        value: `Congrats ${purWal} on the purchase🎉`,
+        inline: false
+      },
+      {
+        name: "Price",
+        value: `${price} SOL`,
+        inline: true
+      },
+      {
+        name: "Seller",
+        value: `${selWal}`,
+        inline: true
+      },
+      {
+        name: "Market",
+        value: market,
+        inline: true
+      }
+    ],
+    image: {
+      url: picture,
+    },
+    footer: {
+      text: `Posted on ${dateString}`,
+    }
+  };
   return embed;
 }
