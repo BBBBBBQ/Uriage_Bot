@@ -94,30 +94,30 @@ app.post("/discord", async (req, res) => {
   )
 })
 
-function getData2Embed(data) {
-  const nftEvent = data.events.nft;
-  const tokenTransfer = data.tokenTransfers[0];
+const getData2Embed = async(txn) => {
+  try {
+      let Mkey = await solanaConnection.getTransaction(txn.signature);
+      //ミントアドレスを変数に代入
+      const mintAD = Mkey.meta.postTokenBalances[0].mint
+      //MEからメタデータ入手
+      metadata = await getMetadataME(mintAD);
+      //入手した情報を変数に代入
+      sign = txn.signature
+      ArtName = metadata.name
+      price = Math.abs((Mkey.meta.preBalances[0] - Mkey.meta.postBalances[0])) / solanaWeb3.LAMPORTS_PER_SOL;
+      //dateString = new Date(txn.timestamp * 1000).toLocaleString();
+      dateString = new Date().toLocaleString();
+      picture = metadata.image
 
-  const embed = new Discord.MessageEmbed()
-    .setColor('#0099ff')
-    .setTitle('NFT Sale: Fox #' + data.events.nft.nfts[0].id)
-    .setDescription(data.description)
-    .setThumbnail('https://example.com/thumbnail.png') // サムネイル画像のURLを適切なものに変更してください。
-    .addFields(
-      { name: 'Seller', value: nftEvent.seller, inline: true },
-      { name: 'Buyer', value: nftEvent.buyer, inline: true },
-      { name: 'Sale Price', value: `${nftEvent.amount / 1e9} SOL`, inline: true },
-      { name: 'Fee', value: `${nftEvent.fee / 1e9} SOL`, inline: true },
-      { name: 'Marketplace', value: data.source, inline: true },
-      { name: 'Timestamp', value: new Date(nftEvent.timestamp * 1000).toISOString(), inline: true },
-      { name: 'Token Transfer', value: `From: ${tokenTransfer.fromUserAccount}\nTo: ${tokenTransfer.toUserAccount}\nAmount: ${tokenTransfer.tokenAmount}\nToken Type: ${tokenTransfer.tokenStandard}`, inline: false }
-    )
-    .setTimestamp()
-    .setFooter('NFT Marketplace Bot');
-
-  return embed;
+      purWal = txn.buyer
+      selWal = txn.seller
+      market = txn.source
+      console.log("PA ;" + purWal + " SE ;" + selWal + " MA ;" + market);
+      console.log(`New Sales Updated: ${ArtName}`);
+  } catch (e) {
+      console.log("error while going through Podt to Discord: ", e);
+    }
 }
-
 
 const getMetadataME = async (tokenPubKey) => {
     try {
