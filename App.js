@@ -49,10 +49,14 @@ function getData2Embed(data) {
   const market = data.source;
 
   const embed = {
-    title: ArtName,
-    url: `https://explorer.solana.com/tx/${sign}`,
+    title: "Transaction Details",
     description: "",
     fields: [
+      {
+        name: "Art Name",
+        value: ArtName,
+        inline: false
+      },
       {
         name: "",
         value: `Congrats ${purWal} on the purchase🎉`,
@@ -74,6 +78,7 @@ function getData2Embed(data) {
         inline: true
       }
     ],
+    url: `https://explorer.solana.com/tx/${sign}`,
     image: {
       url: picture,
     },
