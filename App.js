@@ -46,6 +46,7 @@ app.listen(8999, () => {
 app.use(express.json())
 
 app.post("/discord", async (req, res) => {
+  console.log(req.body[0]);
   await getData2Embed(req.body[0]);
   await axios.post(BOT_Webhook_Url,
     {
