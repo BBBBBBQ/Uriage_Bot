@@ -2,6 +2,8 @@ const axios = require('axios')
 const express = require('express');
 const { InteractionType, InteractionResponseType, verifyKeyMiddleware } = require('discord-interactions');
 const app = express();
+const Discord = require('discord.js');
+
 
 const solanaWeb3 = require('@solana/web3.js');
 const url = solanaWeb3.clusterApiUrl('mainnet-beta');
@@ -46,7 +48,7 @@ app.listen(8999, () => {
 app.use(express.json())
 
 app.post("/discord", async (req, res) => {
-  console.log(req.body[0]);
+  //console.log(req.body[0]);
   await getData2Embed(req.body[0]);
   await axios.post(BOT_Webhook_Url,
     {
