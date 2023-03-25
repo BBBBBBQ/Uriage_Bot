@@ -34,6 +34,7 @@ app.use(express.json());
 app.post("/discord", async (req, res) => {
   const embed = await getData2Embed(req.body[0]);
   await axios.post(BOT_Webhook_Url, { "embeds": [embed] });
+  res.sendStatus(200);
 });
 
 function getData2Embed(data) {
@@ -44,7 +45,7 @@ function getData2Embed(data) {
   const selWal = nftEvent.seller;
   const price = nftEvent.amount / 1e9;
   const dateString = new Date(nftEvent.timestamp * 1000).toISOString();
-  const picture = "https://example.com/thumbnail.png"; // サムネイル画像のURLを適切なものに変更してください。
+  const picture = nftEvent.nfts[0].image;
   const market = data.source;
 
   const embed = {
@@ -80,5 +81,6 @@ function getData2Embed(data) {
       text: `Posted on ${dateString}`,
     }
   };
+
   return embed;
 }
